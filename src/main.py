@@ -21,11 +21,13 @@ from utils.constants import WINDOW_SIZE
 
 from utils.classes.Cylinder import Cylinder
 from utils.classes.World import World
+from utils.classes.Tbar import Tbar
 
 # ----------------------------------------------------------------------------
 # Main
 # ----------------------------------------------------------------------------
 
+"""
 vertices= (
     (1, -1, -1),
     (1, 1, -1),
@@ -58,6 +60,8 @@ def Cube():
         for vertex in edge:
             glVertex3fv(vertices[vertex])
     glEnd()
+    
+"""
 
 def main():
 
@@ -67,6 +71,7 @@ def main():
     world = World(WINDOW_SIZE, WINDOW_POSITION, WINDOW_TITLE)
     world.init_scene()
 
+    """
     cylinder = Cylinder(rotation=(0., 90., 0.),
                         pos=(-2/6, 1., 0.),
                         radius=.25,
@@ -78,8 +83,10 @@ def main():
                          radius=1/6,
                          height=1,
                          color=(0., 1., 0.))
+    """
 
-    a = 0
+    tbar = Tbar(size=1)
+
     while True:
 
         for event in pygame.event.get():
@@ -87,11 +94,15 @@ def main():
                 pygame.quit()
                 quit(0)
 
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+        world.clear()
+
+        tbar.render()
+
+        """
         cylinder.render()
         cylinder2.render()
-        #Cube()
-        #glTranslatef(0.0,0.0, -5)
+        """
+
         #world.process()
         #world.render()
 

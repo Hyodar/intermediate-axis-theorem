@@ -5,6 +5,9 @@ WINDOW_POSITION = (0, 0)
 
 WHITE4F = (1., 1., 1., 1.)
 WHITE3F = (1., 1., 1.)
-
 GREEN3F = (0., 1., 0.)
 BLUE3F = (0., 0., 1.)
+
+BASE_X = (1, 0, 0)
+BASE_Y = (0, 1, 0)
+BASE_Z = (0, 0, 1)

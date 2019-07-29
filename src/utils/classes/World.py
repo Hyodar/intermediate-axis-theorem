@@ -44,25 +44,14 @@ class World:
         self._set_view()
         self._set_lighting()
 
-    def init_window(self):
+    def clear(self):
 
-        glutInit(sys.argv)
-
-        glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH)
-        glutInitWindowSize(self.height, self.width)
-        glutInitWindowPosition(*self.pos)
-
-        self.window = glutCreateWindow(self.title)
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
     def _set_view(self):
 
-        #glMatrixMode(GL_PROJECTION)
-        #glLoadIdentity()
-
         gluPerspective(*self.perspective)
-        glTranslatef(0. ,0., -10)
-
-        #glMatrixMode(GL_MODELVIEW)
+        glTranslatef(0., 0., -10)
 
     def _set_lighting(self):
 

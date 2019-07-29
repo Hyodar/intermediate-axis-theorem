@@ -21,21 +21,20 @@ from OpenGL.GLUT import *
 
 class Cylinder:
 
-    def __init__(self, pos, rotation, color, height, radius):
+    def __init__(self, pos, rotation, color, height, radius, mass):
 
-        self.rotation = rotation
+        self.rotation = np.array(rotation)
+        self.pos = np.array(pos)
         self.height = height
         self.radius = radius
         self.color = color
-        self.pos = pos
+        self.mass = mass
 
         self.slices = 50
         self.stacks = 50
 
-
     def render(self):
 
-        #glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
         glLoadIdentity()
         
         glPushMatrix()
@@ -49,4 +48,3 @@ class Cylinder:
         glutSolidCylinder(self.radius, self.height, self.slices, self.stacks)
 
         glPopMatrix()
-
