@@ -21,26 +21,30 @@ from OpenGL.GLUT import *
 
 class Cylinder:
 
-    def __init__(self, pos, rotation, height, radius):
+    def __init__(self, pos, rotation, color, height, radius):
 
-        self.pos = pos.copy()
-        self.rotation = rotation.copy()
+        self.rotation = rotation
         self.height = height
         self.radius = radius
+        self.color = color
+        self.pos = pos
 
-        self.slices = 20
-        self.stacks = 20
+        self.slices = 50
+        self.stacks = 50
 
         self._create_quad()
 
     def _create_quad(self):
 
         self.quad = gluNewQuadric()
-        gluQuadricNormals(self.quadric, GLU_SMOOTH)
-        gluQuadricTexture(self.quadric, GLU_FALSE)
+        gluQuadricNormals(self.quad, GLU_SMOOTH)
+        gluQuadricTexture(self.quad, GLU_FALSE)
 
     def render(self):
 
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+        glLoadIdentity()
+        
         glPushMatrix()
         glTranslatef(*self.pos)
 
@@ -48,10 +52,8 @@ class Cylinder:
         glRotate(self.rotation[1], 0., 1., 0.)
         glRotate(self.rotation[2], 0., 0., 1.)
 
-        glutSolidCylinder(height=self.height,
-                          slices=self.slices,
-                          stacks=self.stacks,
-                          base=self.radius,
-                          top=self.radius,
-                          quad=self.quad)
+        glColor3f(*self.color)
+        glutSolidCylinder(self.radius, self.height, self.slices, self.stacks)
+
         glPopMatrix()
+

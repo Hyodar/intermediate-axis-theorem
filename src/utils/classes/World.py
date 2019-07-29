@@ -17,7 +17,7 @@ from OpenGL.GL import *
 from OpenGL.GLU import *
 from OpenGL.GLUT import *
 
-from utils.constants import WHITE
+from utils.constants import WHITE4F
 from utils.constants import WINDOW_TITLE
 
 # Class
@@ -35,10 +35,10 @@ class World:
 
     def init_scene(self):
 
-        glClearColor(*WHITE)
+        glutInit(sys.argv)
+        glClearColor(*WHITE4F)
         glClearDepth(1.)
         glDepthFunc(GL_LESS)
-        glEnable(GL_DEPTH_TEST)
         glShadeModel(GL_SMOOTH)
 
         self._set_view()
@@ -56,12 +56,13 @@ class World:
 
     def _set_view(self):
 
-        glMatrixMode(GL_PROJECTION)
-        glLoadIdentity()
+        #glMatrixMode(GL_PROJECTION)
+        #glLoadIdentity()
 
         gluPerspective(*self.perspective)
+        glTranslatef(0. ,0., -5)
 
-        glMatrixMode(GL_MODELVIEW)
+        #glMatrixMode(GL_MODELVIEW)
 
     def _set_lighting(self):
 
