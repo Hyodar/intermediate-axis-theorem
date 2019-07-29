@@ -32,17 +32,10 @@ class Cylinder:
         self.slices = 50
         self.stacks = 50
 
-        self._create_quad()
-
-    def _create_quad(self):
-
-        self.quad = gluNewQuadric()
-        gluQuadricNormals(self.quad, GLU_SMOOTH)
-        gluQuadricTexture(self.quad, GLU_FALSE)
 
     def render(self):
 
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+        #glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
         glLoadIdentity()
         
         glPushMatrix()

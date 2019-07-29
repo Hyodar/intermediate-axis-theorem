@@ -67,11 +67,17 @@ def main():
     world = World(WINDOW_SIZE, WINDOW_POSITION, WINDOW_TITLE)
     world.init_scene()
 
-    cylinder = Cylinder(rotation=(0., 2., 1.),
-                        pos=(0., 0., 0.),
-                        radius=.5,
-                        height=2,
+    cylinder = Cylinder(rotation=(0., 90., 0.),
+                        pos=(-2/6, 1., 0.),
+                        radius=.25,
+                        height=2/3,
                         color=(0., 0., 1.))
+
+    cylinder2 = Cylinder(rotation=(-90., 0., 0.),
+                         pos=(0., -.25, .0),
+                         radius=1/6,
+                         height=1,
+                         color=(0., 1., 0.))
 
     a = 0
     while True:
@@ -81,9 +87,9 @@ def main():
                 pygame.quit()
                 quit(0)
 
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
         cylinder.render()
-        cylinder.rotation = (a, 0., 0.)
-        a += .1
+        cylinder2.render()
         #Cube()
         #glTranslatef(0.0,0.0, -5)
         #world.process()

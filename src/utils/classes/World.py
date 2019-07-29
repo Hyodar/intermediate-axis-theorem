@@ -60,7 +60,7 @@ class World:
         #glLoadIdentity()
 
         gluPerspective(*self.perspective)
-        glTranslatef(0. ,0., -5)
+        glTranslatef(0. ,0., -10)
 
         #glMatrixMode(GL_MODELVIEW)
 
