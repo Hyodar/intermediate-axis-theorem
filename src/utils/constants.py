@@ -1,0 +1,6 @@
+
+WINDOW_TITLE = 'Teste'
+WINDOW_SIZE = (640, 480)
+WINDOW_POSITION = (0, 0)
+
+WHITE = (.1, .1, .1, .1)
