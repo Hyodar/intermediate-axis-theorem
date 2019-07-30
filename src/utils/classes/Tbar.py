@@ -18,6 +18,8 @@ from OpenGL.GLUT import *
 from utils.constants import GREEN3F
 from utils.constants import BLUE3F
 
+from utils.constants import DEFAULT_DELAY
+
 from utils.classes.Cylinder import Cylinder
 
 # Class
@@ -26,25 +28,80 @@ from utils.classes.Cylinder import Cylinder
 
 class Tbar:
 
-    def __init__(self, size):
+    def __init__(self, size, pos, rotation, angvel):
 
         self.size = size
+        self.rotation = np.array(rotation, dtype=np.float)
 
-        self.handle = Cylinder(rotation=(0., 90., 0.),
-                               pos=(-2/6 * self.size, 1., 0.),
-                               radius=.25 * self.size,
-                               height=(2/3) * self.size,
+        self.angvel = np.array(angvel, dtype=np.float)
+        self.angacc = np.array((0., 0., 0.), dtype=np.float)
+
+        self.pos = np.array(pos, dtype=np.float)
+
+        # positions and rotations relative to the tbar
+        self.handle = Cylinder(rotation=(90., 0., 0.),
+                               pos=(0, 3/8, 0),
+                               radius=1/8 * self.size,
+                               height=(3/4) * self.size,
                                mass=4 * self.size,
                                color=BLUE3F)
 
-        self.axis = Cylinder(rotation=(-90., 0., 0.),
-                             pos=(0., -.25 * self.size, .0),
-                             radius=1/6 * self.size,
-                             height=1 * self.size,
+        self.axis = Cylinder(rotation=(0., 90., 0.),
+                             pos=(-(3/8 + self.handle.radius), 0, 0),
+                             radius=1/12 * self.size,
+                             height=3/8 * self.size,
                              mass=1 * self.size,
                              color=GREEN3F)
 
+        # mockup - TODO
+        #self.cm = np.array((-self.handle.radius, 0, self.handle.radius), dtype=np.float)
+        self.cm = np.array((0, 0, 0), dtype=np.float)
+
+        self.handle_relpos = self.handle.pos - self.cm
+        self.axis_relpos = self.axis.pos - self.cm
+
+        #self.rotate(rotation)
+        #self.translate(pos)
+
         self._compute_moment_inertia()
+
+    def render(self):
+
+        #self.rotate(self.rotation)
+        #self.translate(self.pos)
+
+        
+        self._compute_angacc()
+        self._compute_angvel()
+        self._compute_rotation()
+
+        self.handle.render(self.rotation, self.cm, self.pos, self.handle_relpos)
+        self.axis.render(self.rotation, self.cm, self.pos, self.axis_relpos)
+
+    def _compute_angacc(self):
+        # 2 -> 0
+        # 0 -> 1
+        # 1 -> 2        
+        
+        self.angacc[1] = (self.moment_inertia[2] - self.moment_inertia[0]) * self.angvel[2] * self.angvel[0] / self.moment_inertia[1]
+        self.angacc[2] = (self.moment_inertia[0] - self.moment_inertia[1]) * self.angvel[0] * self.angvel[1] / self.moment_inertia[2]
+        self.angacc[0] = (self.moment_inertia[1] - self.moment_inertia[2]) * self.angvel[1] * self.angvel[2] / self.moment_inertia[0]
+        """
+        self.angacc[0] = (self.moment_inertia[1] - self.moment_inertia[2]) * self.angvel[1] * self.angvel[2] / self.moment_inertia[0]
+        self.angacc[1] = (self.moment_inertia[2] - self.moment_inertia[0]) * self.angvel[2] * self.angvel[0] / self.moment_inertia[1]
+        self.angacc[2] = (self.moment_inertia[0] - self.moment_inertia[1]) * self.angvel[0] * self.angvel[1] / self.moment_inertia[2]
+        """
+
+
+    def _compute_angvel(self):
+        
+        for axis in range(2):
+            self.angvel[axis] += self.angacc[axis] * (1 / DEFAULT_DELAY)
+
+    def _compute_rotation(self):
+
+        for axis in range(2):
+            self.rotation[axis] += self.angvel[axis] * (1 / DEFAULT_DELAY)
 
     def _compute_moment_inertia(self):
 
@@ -67,9 +124,4 @@ class Tbar:
                + (1 / 4) * (self.handle.mass) * (self.handle.radius ** 2)
                + (1 / 12) * (self.handle.mass) * (self.handle.height ** 2))
 
-        self.moment_inertia = np.array((ixx, iyy, izz))
-
-    def render(self):
-
-        self.handle.render()
-        self.axis.render()
+        self.moment_inertia = np.array((ixx, iyy, izz), dtype=np.float)

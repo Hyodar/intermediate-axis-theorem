@@ -11,3 +11,5 @@ BLUE3F = (0., 0., 1.)
 BASE_X = (1, 0, 0)
 BASE_Y = (0, 1, 0)
 BASE_Z = (0, 0, 1)
+
+DEFAULT_DELAY = 10

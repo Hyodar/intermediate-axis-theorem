@@ -71,21 +71,7 @@ def main():
     world = World(WINDOW_SIZE, WINDOW_POSITION, WINDOW_TITLE)
     world.init_scene()
 
-    """
-    cylinder = Cylinder(rotation=(0., 90., 0.),
-                        pos=(-2/6, 1., 0.),
-                        radius=.25,
-                        height=2/3,
-                        color=(0., 0., 1.))
-
-    cylinder2 = Cylinder(rotation=(-90., 0., 0.),
-                         pos=(0., -.25, .0),
-                         radius=1/6,
-                         height=1,
-                         color=(0., 1., 0.))
-    """
-
-    tbar = Tbar(size=1)
+    tbar = Tbar(size=1, rotation=(0., 0., 0.), pos=(0., 0., 0.), angvel=(100, .1, .1))
 
     while True:
 
@@ -97,14 +83,6 @@ def main():
         world.clear()
 
         tbar.render()
-
-        """
-        cylinder.render()
-        cylinder2.render()
-        """
-
-        #world.process()
-        #world.render()
 
         pygame.display.flip()
         pygame.time.wait(10)
