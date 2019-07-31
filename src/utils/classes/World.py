@@ -31,18 +31,19 @@ class World:
         self.pos = window_position
         self.title = window_title
 
-        self.perspective = [45., self.width / self.height, .1, 100.]
+        self.perspective = [60., self.width / self.height, .1, 100.]
 
     def init_scene(self):
 
         glutInit(sys.argv)
         glClearColor(*WHITE4F)
+        glEnable(GL_DEPTH_TEST)
         glClearDepth(1.)
         glDepthFunc(GL_LESS)
         glShadeModel(GL_SMOOTH)
 
         self._set_view()
-        self._set_lighting()
+        #self._set_lighting()
 
     def clear(self):
 

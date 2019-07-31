@@ -35,23 +35,6 @@ class Cylinder:
 
     def render(self, tbar_angle, tbar_cm, tbar_pos, rel_pos):
 
-        """
-        glLoadIdentity()
-        
-        glPushMatrix()
-        glTranslatef(*tbar_pos)
-        glTranslatef(*self.pos)
-
-        glRotate(self.rotation[0], 1., 0., 0.)
-        glRotate(self.rotation[1], 0., 1., 0.)
-        glRotate(self.rotation[2], 0., 0., 1.)
-
-        glColor3f(*self.color)
-        glutSolidCylinder(self.radius, self.height, self.slices, self.stacks)
-
-        glPopMatrix()
-        """
-
         glPushMatrix()
         glTranslate(*tbar_pos)
         
@@ -66,7 +49,6 @@ class Cylinder:
         glRotatef(self.rotation[2], 0, 0, 1)
 
         glColor3f(*self.color)
-        #glMaterialfv(GL_FRONT, GL_DIFFUSE, (0., 0., 1., 1.))
-        glutSolidCylinder(self.radius, self.height, self.slices, self.stacks)
+        glutWireCylinder(self.radius, self.height, self.slices, self.stacks)
 
         glPopMatrix()
