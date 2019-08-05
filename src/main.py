@@ -42,6 +42,8 @@ def main():
     tbar = Tbar(size=3, rotation=(0., 0., 0.), pos=(0., 0., 0.), angvel=(4, .1, .1))
     axes = Axes(pos=(-4., 0., 0.))
 
+    frame = 0
+
     while True:
 
         for event in pygame.event.get():
@@ -54,8 +56,10 @@ def main():
         tbar.render()
         axes.render()
 
-        #exit(0)
+        if frame == 2000:
+            exit(0)
 
+        frame += 1
         pygame.display.flip()
         pygame.time.wait(10)
 

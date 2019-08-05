@@ -28,6 +28,9 @@ class Axes:
     def __init__(self, pos):
 
         self.pos = np.array(pos, dtype=np.float)
+        self.x = np.array((3, 0, 0))
+        self.y = np.array((0, 3, 0))
+        self.z = np.array((0, 0, 3))
 
     def _draw_line(self, vector, color):
 
@@ -37,7 +40,7 @@ class Axes:
         glVertex(self.pos + vector)
         glEnd()
 
-    def render(self, rotation=(0,0,0), pos=(-2, 0, 0)):
+    def render(self, rotation=(0,0,0), pos=(0, 0, 0)):
      
         glPushMatrix()
 
@@ -47,8 +50,8 @@ class Axes:
         glRotatef(rotation[1], 0, 1, 0)
         glRotatef(rotation[2], 0, 0, 1)
 
-        self._draw_line(np.array((3., 0., 0.)), YELLOW3F)
-        self._draw_line(np.array((0., 3., 0.)), GREEN3F)
-        self._draw_line(np.array((0., 0., 3.)), BLUE3F)
-
+        self._draw_line(self.x, YELLOW3F)
+        self._draw_line(self.y, GREEN3F)
+        self._draw_line(self.z, BLUE3F)
+        
         glPopMatrix()

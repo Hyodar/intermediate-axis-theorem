@@ -52,7 +52,7 @@ class World:
     def _set_view(self):
 
         gluPerspective(*self.perspective)
-        glTranslatef(0., 0., -10)
+        glTranslatef(0., 0., -10.)
 
     def _set_lighting(self):
 
