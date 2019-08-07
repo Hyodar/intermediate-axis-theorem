@@ -15,11 +15,7 @@ from OpenGL.GL import *
 from OpenGL.GLU import *
 from OpenGL.GLUT import *
 
-from utils.constants import WINDOW_POSITION
-from utils.constants import WINDOW_TITLE
 from utils.constants import WINDOW_SIZE
-
-from utils.constants import DEFAULT_DELAY
 
 from utils.classes.Cylinder import Cylinder
 from utils.classes.World import World
@@ -36,13 +32,12 @@ def main():
     pygame.init()
     pygame.display.set_mode(WINDOW_SIZE, pygl.DOUBLEBUF | pygl.OPENGL)
 
-    world = World(WINDOW_SIZE, WINDOW_POSITION, WINDOW_TITLE)
+    world = World()
+
+    tbar = Tbar(size=3, rotation=(0., 0., 0.), pos=(0., 0., 0.), angvel=(12, .1, .1))
+
+    world.objects = [tbar]
     world.init_scene()
-
-    tbar = Tbar(size=3, rotation=(0., 0., 0.), pos=(0., 0., 0.), angvel=(4, .1, .1))
-    axes = Axes(pos=(-4., 0., 0.))
-
-    frame = 0
 
     while True:
 
@@ -52,14 +47,8 @@ def main():
                 quit(0)
 
         world.clear()
+        world.render()
 
-        tbar.render()
-        axes.render()
-
-        if frame == 2000:
-            exit(0)
-
-        frame += 1
         pygame.display.flip()
         pygame.time.wait(10)
 
