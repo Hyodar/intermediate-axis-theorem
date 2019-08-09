@@ -33,36 +33,51 @@ class World:
         self.objects = []
         self.perspective = (60., self.width / self.height, .1, 100.)
 
+    """
+    World.init_scene()
+        sets some parameters on opengl
+    """
+
     def init_scene(self):
 
         glutInit(sys.argv)
         glClearColor(*self.clear_color)
+
         glEnable(GL_DEPTH_TEST)
+        glEnable(GL_BLEND)
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
+
         glClearDepth(1.)
         glDepthFunc(GL_LESS)
         glShadeModel(GL_SMOOTH)
 
-        self._set_view()
-
-    def add_object(self, obj):
-    
-        self.objects.append(obj)
-
-    def render(self):
-
-        for obj in self.objects:
-            obj.render()
-
-    def clear(self):
-
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
-
-    def _set_view(self):
-
         gluPerspective(*self.perspective)
         glTranslatef(0., 0., -10.)
 
+    """
+    World.add_object(obj:any)
+        adds an object to the rendering list
+    """
 
+    def add_object(self, obj):    
+        self.objects.append(obj)
+
+    """
+    World.render()
+        renders all the objects on the rendering list
+    """
+
+    def render(self):
+        for obj in self.objects:
+            obj.render()
+
+    """
+    World.clear()
+        clears the color and depth buffer
+    """
+
+    def clear(self):
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
 
 

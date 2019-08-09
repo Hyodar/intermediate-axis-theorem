@@ -34,8 +34,14 @@ class Cylinder:
         self.color = color
         self.mass = mass
 
-        self.slices = 50
-        self.stacks = 50
+        self.slices = 10
+        self.stacks = 1
+
+    """
+    Cylinder.render(tbar_cm:tuple, rel_pos:tuple)
+        renders the cylinder based on the tbar's center of mass 
+        and the relative position
+    """
 
     def render(self, tbar_cm, rel_pos):
 

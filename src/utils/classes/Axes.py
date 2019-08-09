@@ -32,6 +32,11 @@ class Axes:
         self.y = np.array((0, 3, 0))
         self.z = np.array((0, 0, 3))
 
+    """
+    Axes._draw_line(vector:np.array, color:tuple)
+        draws a vector from its position
+    """
+
     def _draw_line(self, vector, color):
 
         glColor(color)
@@ -40,15 +45,16 @@ class Axes:
         glVertex(self.pos + vector)
         glEnd()
 
-    def render(self, rotation=(0,0,0), pos=(0, 0, 0)):
+    """
+    Axes.render([pos:tuple])
+        renders the x, y and z axes
+    """
+
+    def render(self, pos=(0, 0, 0)):
      
         glPushMatrix()
 
         self.pos = np.array(pos, dtype=np.float)
-
-        glRotatef(rotation[0], 1, 0, 0)
-        glRotatef(rotation[1], 0, 1, 0)
-        glRotatef(rotation[2], 0, 0, 1)
 
         self._draw_line(self.x, YELLOW3F)
         self._draw_line(self.y, GREEN3F)
