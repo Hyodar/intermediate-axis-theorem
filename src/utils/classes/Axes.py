@@ -9,7 +9,6 @@
 # ----------------------------------------------------------------------------
 
 import numpy as np
-import pygame as pyg
 
 from OpenGL.GL import *
 from OpenGL.GLU import *
@@ -56,8 +55,9 @@ class Axes:
 
         self.pos = np.array(pos, dtype=np.float)
 
+        glLineWidth(2)
         self._draw_line(self.x, YELLOW3F)
         self._draw_line(self.y, GREEN3F)
         self._draw_line(self.z, BLUE3F)
-        
+        glLineWidth(1)
         glPopMatrix()

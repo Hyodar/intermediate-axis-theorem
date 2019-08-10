@@ -11,7 +11,6 @@
 import sys
 
 import numpy as np
-import pygame as pyg
 
 from OpenGL.GL import *
 from OpenGL.GLU import *

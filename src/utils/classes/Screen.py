@@ -11,7 +11,7 @@
 import sys
 
 import numpy as np
-import pygame as pyg
+import pygame
 
 from OpenGL.GL import *
 from OpenGL.GLU import *
@@ -43,8 +43,8 @@ class Screen:
 
         # graph
         self.colors = (YELLOW3F, GREEN3F, BLUE3F)
-        self.graph_ratio = ((self.menu_h/2 - self.menu_padding) 
-                            / (tbar.initial_angvel[0] * tbar.moment_inertia[0] + 3))
+        self.graph_ratio = ((self.menu_h/2 - self.menu_padding)
+                            / (tbar.initial_angvel[0] * tbar.moment_inertia[0] + 10))
         self.time_interval = 2 * (1 - self.menu_padding) / GRAPH_POINTS
         self.tbar = tbar
 
@@ -54,7 +54,7 @@ class Screen:
     """
 
     def render(self):
-        
+
         glPushMatrix()
         glLoadIdentity()
 
@@ -64,6 +64,20 @@ class Screen:
         glPopMatrix()
 
     """
+    Screen.show_paused_message()
+        displays a paused message on the screen
+    """
+
+    def show_paused_message(self):
+
+        glPushMatrix()
+        glLoadIdentity()
+        self._render_text((.8, .9), "Paused")
+        glPopMatrix()
+
+        pygame.display.flip()
+
+    """
     Screen._render_menu()
         renders the black overlay using the properties menu_h and menu_padding
     """
@@ -71,6 +85,7 @@ class Screen:
     def _render_menu(self):
 
         glColor4f(*BLACK3F, .25)
+
         glBegin(GL_POLYGON)
         glVertex3f(-1, -1, 0)
         glVertex3f(1, -1, 0)
@@ -93,12 +108,12 @@ class Screen:
         glVertex3f(-1 + self.menu_padding, -self.menu_padding +.1, 0)
 
         # horizontal line
-        glVertex3f(-1 + self.menu_padding, -.5, 0)
+        glVertex3f(-1.03 + self.menu_padding, -.5, 0)
         glVertex3f(1 - self.menu_padding, -.5, 0)
         glEnd()
 
         self._render_graph_info()
-        
+
         for axis in range(3):
             time = 0
 
@@ -146,13 +161,13 @@ class Screen:
     Screen._render_text(pos:tuple, text:str[, color:tuple])
         renders bitmap text
     """
-        
+
     def _render_text(self, pos, text, color=BLACK3F):
-        
+
         glColor(*color)
         glRasterPos2f(pos[0], pos[1])
         for char in text:
             glutBitmapCharacter(GLUT_BITMAP_9_BY_15, ord(char))
-        
+
 
 

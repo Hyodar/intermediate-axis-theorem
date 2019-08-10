@@ -18,10 +18,8 @@ from OpenGL.GLUT import *
 from utils.constants import WINDOW_SIZE
 from utils.constants import NUM_FRAMES
 
-from utils.classes.Cylinder import Cylinder
 from utils.classes.Screen import Screen
 from utils.classes.World import World
-from utils.classes.Axes import Axes
 from utils.classes.Tbar import Tbar
 
 # ----------------------------------------------------------------------------
@@ -31,34 +29,47 @@ from utils.classes.Tbar import Tbar
 
 def main():
 
+    print('[*] Creating pygame display...')
     pygame.init()
     display = pygame.display.set_mode(WINDOW_SIZE, pygl.DOUBLEBUF | pygl.OPENGL)
 
     world = World()
-    tbar = Tbar(size=3, rotation=(0., 0., 0.), pos=(0., 0., 0.), angvel=(5, .1, .1))
-    world.objects = [tbar]
+    tbar = Tbar()
+    world.add_object(tbar)
 
     screen = Screen(display=display, tbar=tbar)
-    
+
+    print('[*] Initializing scene...')
     world.init_scene()
 
     frame = 0
-    while True:
+    paused = False
 
-        print(frame)
+    print('[*] Starting pygame loop...')
+    while frame < 6000:
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                print('[*] Quit event detected. Stopping pygame...')
                 pygame.quit()
-                quit(0)
+                exit(0)
+            elif event.type == pygame.KEYUP:
+                if event.key == pygame.K_SPACE:
+                    paused = not paused
+                    if paused:
+                        screen.show_paused_message()
 
-        world.clear()
-        world.render()
-        screen.render()
+        if not paused:
+            world.clear()
+            world.render()
+            screen.render()
 
-        frame += 1
+            frame += 1
 
-        pygame.display.flip()
-        pygame.time.wait(10)
+            pygame.display.flip()
+            pygame.time.wait(10)
+
+    print('[*] Simulation finished successfully')
 
 
 if __name__ == '__main__':

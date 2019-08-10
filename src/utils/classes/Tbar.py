@@ -9,7 +9,6 @@
 # ----------------------------------------------------------------------------
 
 import numpy as np
-import pygame as pyg
 
 from OpenGL.GL import *
 from OpenGL.GLU import *
@@ -31,10 +30,9 @@ from utils.classes.Axes import Axes
 
 class Tbar:
 
-    def __init__(self, size, pos, rotation, angvel):
+    def __init__(self, size=3, pos=(0, 0, 0), angvel=(4, .1, .1)):
 
         self.size = size
-        self.rotation = np.array(rotation, dtype=np.float)
 
         self.initial_angvel = np.array(angvel, dtype=np.float)
         self.angvel = self.initial_angvel.copy()
@@ -63,7 +61,7 @@ class Tbar:
         self.axis.pos[0] = -(self.axis.height + self.handle.radius)
 
         # TODO - adaptar ao size
-        self.cm = np.array((-1.5, 0, 0), dtype=np.float)
+        self.cm = np.array((-(self.axis.height / 5 + 2 * self.handle.radius / 5), 0, 0), dtype=np.float)
 
         self.handle_relpos = self.handle.pos - self.cm
         self.axis_relpos = self.axis.pos - self.cm
@@ -97,7 +95,7 @@ class Tbar:
 
     def _compute_angacc(self):
 
-        self.angacc[0] = ((self.moment_inertia[1] - self.moment_inertia[2]) 
+        self.angacc[0] = ((self.moment_inertia[1] - self.moment_inertia[2])
                           * self.angvel[1] * self.angvel[2] / self.moment_inertia[0])
 
         self.angacc[1] = ((self.moment_inertia[2] - self.moment_inertia[0])
@@ -116,16 +114,16 @@ class Tbar:
 
         for axis in range(3):
             self.angvel[axis] += self.angacc[axis] * (1/DEFAULT_DELAY)
-        
-        if self.graph_count % GRAPH_INTERVAL:
+
+        if self.graph_count == GRAPH_INTERVAL:
             self.graph_count = 0
             self.angvels_count += 1
 
             self.angvels.append(self.angvel.copy())
 
-            if self.angvels_count >= 1000:
+            if self.angvels_count >= GRAPH_POINTS:
                 del self.angvels[0]
-        
+
         self.graph_count += 1
 
     """
@@ -152,9 +150,9 @@ class Tbar:
         # 0 -> 2
         # 1 -> 0
         # 2 -> 1
-        
+
         # distance between center of mass of the handle and the total object
-        self.cm_distance = - (self.axis.height / 6 + self.handle.radius / 3)
+        self.cm_distance = - (self.axis.height / 5 + 2 * self.handle.radius/5)
 
         iyy = ((1 / 2) * (self.handle.mass) * (self.handle.radius ** 2)
                + (self.handle.mass) * self.cm_distance ** 2 + (self.axis.mass / 4) * (self.axis.radius ** 2)
