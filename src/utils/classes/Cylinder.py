@@ -46,7 +46,6 @@ class Cylinder:
 
         glPushMatrix()
         glTranslate(*tbar_cm)
-
         glTranslate(*rel_pos)
 
         glRotatef(self.rotation[0], 1, 0, 0)
@@ -55,9 +54,6 @@ class Cylinder:
 
         glColor3f(*self.color)
         glutWireCylinder(self.radius, self.height, self.slices, self.stacks)
-
-        glTranslate(*(-rel_pos))
-        glTranslate(*(-tbar_cm))
 
         glPopMatrix()
 

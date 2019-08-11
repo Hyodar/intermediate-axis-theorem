@@ -60,7 +60,6 @@ class Tbar:
         self.handle.pos[1] = self.axis.height
         self.axis.pos[0] = -(self.axis.height + self.handle.radius)
 
-        # TODO - adaptar ao size
         self.cm = np.array((-(self.axis.height / 5 + 2 * self.handle.radius / 5), 0, 0), dtype=np.float)
 
         self.handle_relpos = self.handle.pos - self.cm
@@ -152,7 +151,7 @@ class Tbar:
         # 2 -> 1
 
         # distance between center of mass of the handle and the total object
-        self.cm_distance = - (self.axis.height / 5 + 2 * self.handle.radius/5)
+        self.cm_distance = self.cm[0]
 
         iyy = ((1 / 2) * (self.handle.mass) * (self.handle.radius ** 2)
                + (self.handle.mass) * self.cm_distance ** 2 + (self.axis.mass / 4) * (self.axis.radius ** 2)
