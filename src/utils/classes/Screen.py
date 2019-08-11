@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 
 # Intermediate Axis Theorem Simulator -> Screen
 # Author: Franco Barpp Gomes (https://github.com/Hyodar)

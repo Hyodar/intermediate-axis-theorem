@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 
 # Intermediate Axis Theorem Simulator
 # Author: Franco Barpp Gomes (https://github.com/Hyodar)
@@ -46,7 +46,7 @@ def main():
     paused = False
 
     print('[*] Starting pygame loop...')
-    while frame < 6000:
+    while frame < NUM_FRAMES:
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
