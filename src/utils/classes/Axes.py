@@ -12,7 +12,6 @@ import numpy as np
 
 from OpenGL.GL import *
 from OpenGL.GLU import *
-from OpenGL.GLUT import *
 
 from utils.constants import GREEN3F
 from utils.constants import BLUE3F

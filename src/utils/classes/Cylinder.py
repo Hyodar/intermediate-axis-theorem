@@ -8,14 +8,56 @@
 # Imported modules
 # ----------------------------------------------------------------------------
 
+import math
 import numpy as np
 
 from OpenGL.GL import *
 from OpenGL.GLU import *
-from OpenGL.GLUT import *
 
 from utils.constants import DEFAULT_DELAY
 from utils.classes.Axes import Axes
+
+
+# Draw Cylinder
+# from: https://stackoverflow.com/questions/41912261/pyopengl-creating-a-cylinder-without-using-glucylinder-function
+# ----------------------------------------------------------------------------
+
+def draw_cylinder(radius, height, num_slices):
+    r = radius
+    h = height
+    n = float(num_slices)
+
+    circle_pts = []
+    for i in range(int(n) + 1):
+        angle = 2 * math.pi * (i/n)
+        x = r * math.cos(angle)
+        y = r * math.sin(angle)
+        pt = (x, y)
+        circle_pts.append(pt)
+
+    glBegin(GL_TRIANGLE_FAN)#drawing the back circle
+    glColor(1, 0, 0)
+    glVertex(0, 0, h/2.0)
+    for (x, y) in circle_pts:
+        z = h/2.0
+        glVertex(x, y, z)
+    glEnd()
+
+    glBegin(GL_TRIANGLE_FAN)#drawing the front circle
+    glColor(0, 0, 1)
+    glVertex(0, 0, h/2.0)
+    for (x, y) in circle_pts:
+        z = -h/2.0
+        glVertex(x, y, z)
+    glEnd()
+
+    glBegin(GL_TRIANGLE_STRIP)#draw the tube
+    glColor(0, 1, 0)
+    for (x, y) in circle_pts:
+        z = h/2.0
+        glVertex(x, y, z)
+        glVertex(x, y, -z)
+    glEnd()
 
 
 # Class
@@ -24,36 +66,30 @@ from utils.classes.Axes import Axes
 
 class Cylinder:
 
-    def __init__(self, pos, rotation, color, height, radius, mass):
+    def __init__(self, pos, rotation, height, radius, mass):
 
         self.rotation = np.array(rotation, dtype=np.float)
         self.pos = np.array(pos, dtype=np.float)
         self.height = height
         self.radius = radius
-        self.color = color
         self.mass = mass
 
         self.slices = 10
-        self.stacks = 1
 
     """
-    Cylinder.render(tbar_cm:tuple, rel_pos:tuple)
-        renders the cylinder based on the tbar's center of mass 
-        and the relative position
+    Cylinder.render()
+        renders the cylinder
     """
 
-    def render(self, tbar_cm, rel_pos):
-
+    def render(self):
         glPushMatrix()
-        glTranslate(*tbar_cm)
-        glTranslate(*rel_pos)
+        glTranslate(*self.pos)
 
         glRotatef(self.rotation[0], 1, 0, 0)
         glRotatef(self.rotation[1], 0, 1, 0)
         glRotatef(self.rotation[2], 0, 0, 1)
 
-        glColor3f(*self.color)
-        glutWireCylinder(self.radius, self.height, self.slices, self.stacks)
+        draw_cylinder(self.radius, self.height, self.slices)
 
         glPopMatrix()
 

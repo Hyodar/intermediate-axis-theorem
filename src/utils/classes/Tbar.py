@@ -12,7 +12,6 @@ import numpy as np
 
 from OpenGL.GL import *
 from OpenGL.GLU import *
-from OpenGL.GLUT import *
 
 from utils.constants import GREEN3F
 from utils.constants import BLUE3F
@@ -47,23 +46,15 @@ class Tbar:
                                pos=(0, 0, 0),
                                radius=(1/3) * self.size,
                                height=2 * self.size,
-                               mass=(4/3) * self.size,
-                               color=BLUE3F)
+                               mass=(4/3) * self.size)
 
         self.axis = Cylinder(rotation=(0., 90., 0.),
-                             pos=(0, 0, 0),
+                             pos=(self.size / 2, 0, 0),
                              radius=(1/4) * self.size,
-                             height=1 * self.size,
-                             mass=(1/3) * self.size,
-                             color=GREEN3F)
-
-        self.handle.pos[1] = self.axis.height
-        self.axis.pos[0] = -(self.axis.height + self.handle.radius)
+                             height=self.size,
+                             mass=(1/3) * self.size)
 
         self.cm = np.array((-(self.axis.height / 5 + 2 * self.handle.radius / 5), 0, 0), dtype=np.float)
-
-        self.handle_relpos = self.handle.pos - self.cm
-        self.axis_relpos = self.axis.pos - self.cm
 
         self.axes = Axes(pos=self.cm)
 
@@ -83,8 +74,8 @@ class Tbar:
         self._compute_angvel()
         self._compute_rotation()
 
-        self.handle.render(self.cm, self.handle_relpos)
-        self.axis.render(self.cm, self.axis_relpos)
+        self.handle.render()
+        self.axis.render()
         self.axes.render()
 
     """
@@ -132,7 +123,7 @@ class Tbar:
 
     def _compute_rotation(self):
 
-        angx, angy, angz = self.angvel * (1/DEFAULT_DELAY) * (180/np.pi)
+        angx, angy, angz = self.angvel * (1 / DEFAULT_DELAY) * (180 / np.pi)
 
         glRotate(angx, 1, 0, 0)
         glRotate(angy, 0, 1, 0)

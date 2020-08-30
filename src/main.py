@@ -13,7 +13,6 @@ import pygame
 
 from OpenGL.GL import *
 from OpenGL.GLU import *
-from OpenGL.GLUT import *
 
 from utils.constants import WINDOW_SIZE
 from utils.constants import NUM_FRAMES

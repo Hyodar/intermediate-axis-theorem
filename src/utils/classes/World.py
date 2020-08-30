@@ -14,7 +14,6 @@ import numpy as np
 
 from OpenGL.GL import *
 from OpenGL.GLU import *
-from OpenGL.GLUT import *
 
 from utils.constants import WHITE4F
 from utils.constants import WINDOW_SIZE
@@ -39,7 +38,6 @@ class World:
 
     def init_scene(self):
 
-        glutInit(sys.argv)
         glClearColor(*self.clear_color)
 
         glEnable(GL_DEPTH_TEST)

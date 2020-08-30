@@ -12,19 +12,19 @@ import sys
 
 import numpy as np
 import pygame
+import pygame.freetype
 
 from OpenGL.GL import *
 from OpenGL.GLU import *
-from OpenGL.GLUT import *
 
 from utils.constants import GRAPH_POINTS
 
 from utils.constants import WINDOW_SIZE
 
 from utils.constants import YELLOW3F
-from utils.constants import BLACK3F
 from utils.constants import GREEN3F
 from utils.constants import BLUE3F
+from utils.constants import BLACK3F
 
 # Class
 # ----------------------------------------------------------------------------
@@ -40,6 +40,9 @@ class Screen:
         # menu
         self.menu_h = 1
         self.menu_padding = .2
+
+        # font
+        self.font = pygame.font.SysFont("FreeMono", 16)
 
         # graph
         self.colors = (YELLOW3F, GREEN3F, BLUE3F)
@@ -135,7 +138,7 @@ class Screen:
 
     def _render_graph_info(self):
 
-        self._render_text((-1 + self.menu_padding + .05, -.1), "Momentos angulares")
+        self._render_text((-1 + self.menu_padding + .05, -.1), "Angular moments")
 
         glBegin(GL_LINES)
 
@@ -162,12 +165,10 @@ class Screen:
         renders bitmap text
     """
 
-    def _render_text(self, pos, text, color=BLACK3F):
+    def _render_text(self, pos, text, color=(0, 0, 0, 255)):
 
-        glColor(*color)
-        glRasterPos2f(pos[0], pos[1])
-        for char in text:
-            glutBitmapCharacter(GLUT_BITMAP_9_BY_15, ord(char))
-
-
+        text_surface = self.font.render(text, True, color)
+        text_data = pygame.image.tostring(text_surface, "RGBA", True)
+        glRasterPos2d(*pos)
+        glDrawPixels(text_surface.get_width(), text_surface.get_height(), GL_RGBA, GL_UNSIGNED_BYTE, text_data)
 
