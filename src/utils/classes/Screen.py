@@ -138,7 +138,7 @@ class Screen:
 
     def _render_graph_info(self):
 
-        self._render_text((-1 + self.menu_padding + .05, -.1), "Angular moments")
+        self._render_text((-1 + self.menu_padding + .05, -.1), "Angular momentum")
 
         glBegin(GL_LINES)
 
