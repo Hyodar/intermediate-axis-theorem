@@ -60,6 +60,8 @@ def main():
 
         if not paused:
             world.clear()
+            world.step()
+            
             world.render()
             screen.render()
 

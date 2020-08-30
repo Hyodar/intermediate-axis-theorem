@@ -64,16 +64,21 @@ class Tbar:
         self._compute_moment_inertia()
 
     """
-    Tbar.render()
-        computes the new velocities and renders all the components (handle, axis, and axes)
+    Tbar.step()
+        computes the new velocities
     """
-
-    def render(self):
-
+    
+    def step(self):
         self._compute_angacc()
         self._compute_angvel()
         self._compute_rotation()
 
+    """
+    Tbar.render()
+        renders all the components (handle, axis, and axes)
+    """
+
+    def render(self):
         self.handle.render()
         self.axis.render()
         self.axes.render()

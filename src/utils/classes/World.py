@@ -60,6 +60,15 @@ class World:
         self.objects.append(obj)
 
     """
+    World.step()
+        steps all the objects on the rendering list
+    """
+
+    def step(self):
+        for obj in self.objects:
+            obj.step()
+
+    """
     World.render()
         renders all the objects on the rendering list
     """
