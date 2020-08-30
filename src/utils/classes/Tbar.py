@@ -29,16 +29,16 @@ from utils.classes.Axes import Axes
 
 class Tbar:
 
-    def __init__(self, size=3, pos=(0, 0, 0), angvel=(4, .1, .1)):
+    def __init__(self, size=2.5, pos=(0, 0, 0), angvel=(4, .1, .1)):
 
         self.size = size
 
-        self.initial_angvel = np.array(angvel, dtype=np.float)
+        self.initial_angvel = np.array(angvel, dtype=np.float64)
         self.angvel = self.initial_angvel.copy()
         self.angvels = [self.initial_angvel.copy()]
-        self.angacc = np.array((0., 0., 0.), dtype=np.float)
+        self.angacc = np.array((0., 0., 0.), dtype=np.float64)
 
-        self.pos = np.array(pos, dtype=np.float)
+        self.pos = np.array(pos, dtype=np.float64)
 
         # positions and rotations relative to the tbar
 
@@ -54,7 +54,7 @@ class Tbar:
                              height=self.size,
                              mass=(1/3) * self.size)
 
-        self.cm = np.array((-(self.axis.height / 5 + 2 * self.handle.radius / 5), 0, 0), dtype=np.float)
+        self.cm = np.array((-(self.axis.height / 5 + 2 * self.handle.radius / 5), 0, 0), dtype=np.float64)
 
         self.axes = Axes(pos=self.cm)
 
@@ -165,5 +165,5 @@ class Tbar:
                + (1 / 4) * (self.handle.mass) * (self.handle.radius ** 2)
                + (1 / 12) * (self.handle.mass) * (self.handle.height ** 2))
 
-        self.moment_inertia = np.array((ixx, iyy, izz), dtype=np.float)
+        self.moment_inertia = np.array((ixx, iyy, izz), dtype=np.float64)
 

@@ -68,8 +68,8 @@ class Cylinder:
 
     def __init__(self, pos, rotation, height, radius, mass):
 
-        self.rotation = np.array(rotation, dtype=np.float)
-        self.pos = np.array(pos, dtype=np.float)
+        self.rotation = np.array(rotation, dtype=np.float64)
+        self.pos = np.array(pos, dtype=np.float64)
         self.height = height
         self.radius = radius
         self.mass = mass

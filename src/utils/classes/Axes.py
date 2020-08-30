@@ -25,7 +25,7 @@ class Axes:
 
     def __init__(self, pos):
 
-        self.pos = np.array(pos, dtype=np.float)
+        self.pos = np.array(pos, dtype=np.float64)
         self.x = np.array((3, 0, 0))
         self.y = np.array((0, 3, 0))
         self.z = np.array((0, 0, 3))
@@ -52,7 +52,7 @@ class Axes:
      
         glPushMatrix()
 
-        self.pos = np.array(pos, dtype=np.float)
+        self.pos = np.array(pos, dtype=np.float64)
 
         glLineWidth(2)
         self._draw_line(self.x, YELLOW3F)
